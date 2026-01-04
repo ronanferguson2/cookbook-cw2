@@ -1,16 +1,21 @@
-name: Deploy to Azure Storage
+name: Deploy to Azure Storage Static Website
+
 on:
   push:
     branches: [ main ]
+
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Upload to Blob Storage
-      # FIXED: Changed 'azure' to 'Azure' (Capital A)
-      uses: Azure/storage-deploy@v1 
-      with:
-        connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-        remote-path: '.' 
-        target-path: '$web'
+      - uses: actions/checkout@v4
+
+      - name: Upload via az CLI
+        uses: Azure/cli@v2
+        with:
+          inlineScript: |
+            az storage blob upload-batch \
+              --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" \
+              --destination '$web' \
+              --source . \
+              --overwrite
