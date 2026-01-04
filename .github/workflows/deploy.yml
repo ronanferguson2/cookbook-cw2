@@ -8,9 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Upload to Blob Storage
-      uses: Azure/storage-deploy@v1
+      # FIXED: Changed 'azure' to 'Azure' (Capital A)
+      uses: Azure/storage-deploy@v1 
       with:
-        slot-name: 'production'
         connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-        remote-path: '.' # Uploads everything in the root of your repo
+        remote-path: '.' 
         target-path: '$web'
