@@ -1,0 +1,16 @@
+name: Deploy to Azure Storage
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Upload to Blob Storage
+      uses: Azure/storage-deploy@v1
+      with:
+        slot-name: 'production'
+        connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+        remote-path: '.' # Uploads everything in the root of your repo
+        target-path: '$web'
