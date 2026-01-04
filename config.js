@@ -7,5 +7,3 @@ const API = {
   DELETE_URL: "https://prod-30.polandcentral.logic.azure.com/workflows/df05d50020984d7788a72c5bb48bd83b/triggers/When_an_HTTP_request_is_received/paths/invoke/recipe/%7Bid%7D?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=Xfq8ujTUSLB0vSr3LqXT6shPLY6ocoM1etcVZGL5fJ8"
 };
 
-// If your container is public, set this to your blob base:
-const BLOB_BASE = "https://<yourstorageaccount>.blob.core.windows.net/media/";
