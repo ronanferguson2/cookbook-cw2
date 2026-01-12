@@ -5,6 +5,6 @@ const API = {
   GET_BY_ID_URL: "https://prod-05.polandcentral.logic.azure.com/workflows/7b83399e1f0d40998e4fd0736a5cb42a/triggers/When_an_HTTP_request_is_received/paths/invoke/recipes/%7Bid%7D?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=iHz4Iz5IZZsNG8ejIxn2IOEKdfXXt4-06Lx1X65TWAc",
   UPDATE_URL: "https://prod-05.polandcentral.logic.azure.com/workflows/2ff0dc9ee71744d7bb04f0bb1b2a3ed4/triggers/When_an_HTTP_request_is_received/paths/invoke/recipes/%7Bid%7D?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=0CPzSX7tVt9EFwOpO-k0eolBif4kHJ6h6w-DnTN98v8",
   DELETE_URL: "https://prod-30.polandcentral.logic.azure.com/workflows/df05d50020984d7788a72c5bb48bd83b/triggers/When_an_HTTP_request_is_received/paths/invoke/recipe/%7Bid%7D?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=Xfq8ujTUSLB0vSr3LqXT6shPLY6ocoM1etcVZGL5fJ8",
-  SEARCH_LOGIC_APP_URL: "https://prod-04.polandcentral.logic.azure.com/workflows/4207d024b68b4b28ba9a315a4ef6be17/triggers/When_an_HTTP_request_is_received/paths/invoke/search?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=DvW11D5rxilnHzeiAq5ezUTmr5qcy76oAlUD2926Va4"
+  SEARCH_LOGIC_APP_URL: "https://prod-04.polandcentral.logic.azure.com/workflows/4207d024b68b4b28ba9a315a4ef6be17/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=DvW11D5rxilnHzeiAq5ezUTmr5qcy76oAlUD2926Va4"
 };
 
