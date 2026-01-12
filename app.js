@@ -201,8 +201,7 @@ window.onload = () => {
 
 async function triggerSearch() {
     const searchTerm = document.getElementById('searchInput').value;
-    // Replace with your Logic App URL from the trigger
-    const logicAppUrl = "SEARCH_LOGIC_APP_URL"; 
+    const logicAppUrl = API.SEARCH_LOGIC_APP_URL; 
 
     try {
         const response = await fetch(`${logicAppUrl}&q=${encodeURIComponent(searchTerm)}`);
