@@ -114,8 +114,17 @@ async function triggerSearch() {
     resultsDiv.innerHTML = '<div style="text-align: center; color: #667eea; font-size: 18px;">Searching...</div>';
 
     try {
-        const response = await fetch(`${API.SEARCH_LOGIC_APP_URL}&q=${encodeURIComponent(searchTerm)}`);
+        const response = await fetch(API.SEARCH_LOGIC_APP_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ q: searchTerm })
+        });
+        
+        console.log('Search response status:', response.status);
         const data = await response.json();
+        console.log('Search response data:', data);
         
         const recipes = data.Documents || data.value || data || [];
         
