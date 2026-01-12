@@ -114,27 +114,16 @@ async function triggerSearch() {
     resultsDiv.innerHTML = '<div style="text-align: center; color: #667eea; font-size: 18px;">Searching...</div>';
 
     try {
-        const response = await fetch(API.SEARCH_LOGIC_APP_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ q: searchTerm })
-        });
+        const searchUrl = `${API.SEARCH_LOGIC_APP_URL}&q=${encodeURIComponent(searchTerm)}`;
+        console.log('Search URL:', searchUrl);
         
+        const response = await fetch(searchUrl);
         console.log('Search response status:', response.status);
         
         if (!response.ok) {
             const errorText = await response.text();
             console.log('Error response:', errorText);
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-            const responseText = await response.text();
-            console.log('Non-JSON response:', responseText);
-            throw new Error('Response is not JSON');
         }
         
         const data = await response.json();
