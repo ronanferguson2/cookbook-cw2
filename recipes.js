@@ -123,6 +123,20 @@ async function triggerSearch() {
         });
         
         console.log('Search response status:', response.status);
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.log('Error response:', errorText);
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const responseText = await response.text();
+            console.log('Non-JSON response:', responseText);
+            throw new Error('Response is not JSON');
+        }
+        
         const data = await response.json();
         console.log('Search response data:', data);
         
@@ -166,7 +180,7 @@ async function triggerSearch() {
         }).join('');
     } catch (error) {
         console.error("Search failed:", error);
-        resultsDiv.innerHTML = '<div style="text-align: center; color: #e74c3c;">Search failed. Check console for details.</div>';
+        resultsDiv.innerHTML = `<div style="text-align: center; color: #e74c3c;">Search failed: ${error.message}</div>`;
     }
 }
 
