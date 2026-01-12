@@ -198,3 +198,27 @@ window.onload = () => {
     const cancelBtn = document.getElementById('cancelEdit');
     if (cancelBtn) cancelBtn.style.display = 'none';
 };
+
+async function triggerSearch() {
+    const searchTerm = document.getElementById('searchInput').value;
+    // Replace with your Logic App URL from the trigger
+    const logicAppUrl = "SEARCH_LOGIC_APP_URL"; 
+
+    try {
+        const response = await fetch(`${logicAppUrl}&q=${encodeURIComponent(searchTerm)}`);
+        const data = await response.json();
+        
+        const resultsDiv = document.getElementById('recipeResults');
+        resultsDiv.innerHTML = data.value.map(recipe => `
+            <div class="recipe-card">
+                <h3>${recipe.title}</h3>
+                <p>${recipe.description}</p>
+                <div class="ai-tags">
+                    ${recipe.ai_tag_names.map(tag => `<span class="tag-pill">${tag}</span>`).join('')}
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error("Search failed:", error);
+    }
+}

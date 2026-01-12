@@ -8,6 +8,12 @@
 <body>
   <h1>Cookbook</h1>
 
+  <div class="recipe-search">
+    <input type="text" id="searchInput" placeholder="Search by ingredient or AI tag (e.g., 'hamburger')...">
+    <button onclick="triggerSearch()">Search</button>
+</div>
+
+<div id="recipeResults"></div>
   <section class="card">
     <h2>Create recipe</h2>
     <form id="createForm">
