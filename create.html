@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Cookbook - Create Recipe</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav>
+    <h1>Cookbook</h1>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="create.html" class="active">Create Recipe</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="card">
+      <h2>Create New Recipe</h2>
+      <form id="createForm">
+        <input name="pk" placeholder="pk (e.g. user123)" required />
+        <input name="title" placeholder="Recipe Title" required />
+        <input name="description" placeholder="Recipe Description" required />
+        <textarea name="ingredients" placeholder='Ingredients JSON e.g. ["Milk","Eggs"]' required></textarea>
+        <textarea name="steps" placeholder='Steps JSON e.g. ["Mix","Cook"]' required></textarea>
+        
+        <label for="recipe-image">Recipe Image:</label>
+        <input type="file" id="recipe-image" name="File" accept="image/*" required />
+        
+        <button type="submit">📤 Upload</button>
+      </form>
+      <pre id="createResult"></pre>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="create.js"></script>
+</body>
+</html>
