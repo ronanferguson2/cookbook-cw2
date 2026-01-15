@@ -4,6 +4,17 @@ const getImageUrl = (blobName) => {
     return `https://blobcookbook.blob.core.windows.net/cookbook-media/${blobName}`;
 };
 
+// --- HELPER: MATCH LOCAL IMAGE BY RECIPE TITLE ---
+const getLocalImage = (title) => {
+    const titleLower = title.toLowerCase();
+    if (titleLower.includes('breakfast') || titleLower.includes('roll')) return 'css/photos/breakfast-roll.jpg';
+    if (titleLower.includes('chicken burger')) return 'css/photos/chicken-burger.jpeg';
+    if (titleLower.includes('tikka')) return 'css/photos/chicken-tikka.jpg';
+    if (titleLower.includes('kebab')) return 'css/photos/kebab.jpeg';
+    if (titleLower.includes('pie')) return 'css/photos/pie.jpeg';
+    return null;
+};
+
 // --- HELPER: DECODE AZURE COSMOS DATA ---
 const decodeCosmosData = (data) => {
     if (Array.isArray(data) && data[0] && data[0]['$content']) {
@@ -177,12 +188,9 @@ async function loadRecipes() {
     console.log('Raw recipes:', recipes);
     
     recipesContainer.innerHTML = recipes.map(recipe => {
-        console.log('Recipe media:', recipe.media);
-        // Decode media if it's wrapped in Cosmos encoding
         const media = decodeCosmosData(recipe.media);
-        console.log('Decoded media:', media);
         
-        let imgSrc = 'https://placehold.co/150/667eea/ffffff?text=No+Image';
+        let imgSrc = getLocalImage(recipe.title) || 'https://placehold.co/150/667eea/ffffff?text=No+Image';
         
         if (media?.fullUrl) {
             imgSrc = media.fullUrl;
