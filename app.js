@@ -69,17 +69,32 @@ createForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     if (isEditMode) {
-        // ... (Update logic)
+        const updatedDoc = {
+            id: editingRecipeId,
+            pk: createForm.pk.value,
+            title: createForm.title.value,
+            description: createForm.description.value,
+            ingredients: JSON.parse(createForm.ingredients.value),
+            steps: JSON.parse(createForm.steps.value),
+            media: window.currentRecipeMedia,
+            createdAt: window.currentRecipeCreatedAt
+        };
+        await updateRecipe(editingRecipeId, updatedDoc);
+        resetForm();
+        loadRecipes();
+        document.getElementById('createResult').innerText = 'Recipe updated successfully!';
     } else {
-        // 1. Create FormData from the form
-        const formData = new FormData(createForm);
+        const formData = new FormData();
         
-        // 2. Ensure the file is explicitly named "File" 
-        // This ensures it matches the index the Logic App expects.
+        // Add fields in order: pk, title, description, ingredients, steps, File (index 5)
+        formData.append('pk', createForm.pk.value);
+        formData.append('title', createForm.title.value);
+        formData.append('description', createForm.description.value);
+        formData.append('ingredients', createForm.ingredients.value);
+        formData.append('steps', createForm.steps.value);
+        
         const fileInput = createForm.querySelector('input[type="file"]');
         if(fileInput.files[0]) {
-            // Remove any accidental versions and set it strictly
-            formData.delete('File'); 
             formData.append('File', fileInput.files[0]);
         }
 
@@ -164,15 +179,10 @@ async function loadRecipes() {
         // Fallback image if nothing is found
         let imgSrc = 'https://placehold.co/150/667eea/ffffff?text=No+Image';
         
-        // This logic ensures we use the numeric ID name seen in your screenshot
-        if (recipe.media) {
-            if (recipe.media.blobName) {
-                imgSrc = getImageUrl(recipe.media.blobName);
-            } else if (recipe.media.url) {
-                imgSrc = recipe.media.url;
-            } else if (typeof recipe.media === 'string') {
-                imgSrc = getImageUrl(recipe.media);
-            }
+        if (recipe.media?.fullUrl) {
+            imgSrc = recipe.media.fullUrl;
+        } else if (recipe.media?.blobName) {
+            imgSrc = getImageUrl(recipe.media.blobName);
         }
         
         return `
