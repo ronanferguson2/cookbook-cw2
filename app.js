@@ -176,13 +176,15 @@ async function loadRecipes() {
     const recipes = await getAllRecipes();
     
     recipesContainer.innerHTML = recipes.map(recipe => {
-        // Fallback image if nothing is found
+        // Decode media if it's wrapped in Cosmos encoding
+        const media = decodeCosmosData(recipe.media);
+        
         let imgSrc = 'https://placehold.co/150/667eea/ffffff?text=No+Image';
         
-        if (recipe.media?.fullUrl) {
-            imgSrc = recipe.media.fullUrl;
-        } else if (recipe.media?.blobName) {
-            imgSrc = getImageUrl(recipe.media.blobName);
+        if (media?.fullUrl) {
+            imgSrc = media.fullUrl;
+        } else if (media?.blobName) {
+            imgSrc = getImageUrl(media.blobName);
         }
         
         return `
