@@ -189,13 +189,17 @@ async function loadRecipes() {
     
     recipesContainer.innerHTML = recipes.map(recipe => {
         const media = decodeCosmosData(recipe.media);
+        const localImg = getLocalImage(recipe.title);
         
-        let imgSrc = getLocalImage(recipe.title) || 'https://placehold.co/150/667eea/ffffff?text=No+Image';
+        let imgSrc = localImg || 'https://placehold.co/150/667eea/ffffff?text=No+Image';
         
-        if (media?.fullUrl) {
-            imgSrc = media.fullUrl;
-        } else if (media?.blobName) {
-            imgSrc = getImageUrl(media.blobName);
+        // Only use blob if local image doesn't exist
+        if (!localImg) {
+            if (media?.fullUrl) {
+                imgSrc = media.fullUrl;
+            } else if (media?.blobName) {
+                imgSrc = getImageUrl(media.blobName);
+            }
         }
         
         return `
