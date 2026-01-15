@@ -69,15 +69,18 @@ createForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     if (isEditMode) {
-        // ... (Keep your existing Update logic)
+        // ... (Update logic)
     } else {
-        // Handle create
+        // 1. Create FormData from the form
         const formData = new FormData(createForm);
         
+        // 2. Ensure the file is explicitly named "File" 
+        // This ensures it matches the index the Logic App expects.
         const fileInput = createForm.querySelector('input[type="file"]');
         if(fileInput.files[0]) {
-            // This MUST match @triggerFormDataValue('FileName') in your Logic App
-            formData.append('FileName', fileInput.files[0].name);
+            // Remove any accidental versions and set it strictly
+            formData.delete('File'); 
+            formData.append('File', fileInput.files[0]);
         }
 
         try {
@@ -87,7 +90,7 @@ createForm.addEventListener('submit', async (e) => {
             loadRecipes();
         } catch (err) {
             console.error("Upload failed:", err);
-            document.getElementById('createResult').innerText = "Upload failed. Check console.";
+            document.getElementById('createResult').innerText = "Upload failed.";
         }
     }
 });

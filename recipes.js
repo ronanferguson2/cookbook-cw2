@@ -3,6 +3,7 @@ const getImageUrl = (blobName) => {
     return `https://blobcookbook.blob.core.windows.net/cookbook-media/${blobName}`;
 };
 
+
 // --- HELPER: DECODE AZURE COSMOS DATA ---
 const decodeCosmosData = (data) => {
     if (Array.isArray(data) && data[0] && data[0]['$content']) {
@@ -70,14 +71,12 @@ async function loadRecipes() {
     recipesContainer.innerHTML = recipes.map(recipe => {
         let imgSrc = 'https://placehold.co/150/667eea/ffffff?text=No+Image';
         
-        if (recipe.media) {
-            if (recipe.media.blobName) {
-                imgSrc = getImageUrl(recipe.media.blobName);
-            } else if (recipe.media.url) {
-                imgSrc = recipe.media.url;
-            } else if (typeof recipe.media === 'string') {
-                imgSrc = getImageUrl(recipe.media);
-            }
+        if (recipe.media?.blobName) {
+            imgSrc = recipe.media.blobName.startsWith('http') 
+                ? recipe.media.blobName 
+                : `${API.BLOB_BASE_URL}${recipe.id}`;
+        } else {
+            imgSrc = `${API.BLOB_BASE_URL}${recipe.id}`;
         }
         
         return `
@@ -139,14 +138,12 @@ async function triggerSearch() {
         resultsDiv.innerHTML = recipes.map(recipe => {
             let imgSrc = 'https://placehold.co/150/667eea/ffffff?text=No+Image';
             
-            if (recipe.media) {
-                if (recipe.media.blobName) {
-                    imgSrc = getImageUrl(recipe.media.blobName);
-                } else if (recipe.media.url) {
-                    imgSrc = recipe.media.url;
-                } else if (typeof recipe.media === 'string') {
-                    imgSrc = getImageUrl(recipe.media);
-                }
+            if (recipe.media?.blobName) {
+                imgSrc = recipe.media.blobName.startsWith('http') 
+                    ? recipe.media.blobName 
+                    : `${API.BLOB_BASE_URL}${recipe.id}`;
+            } else {
+                imgSrc = `${API.BLOB_BASE_URL}${recipe.id}`;
             }
             
             return `
