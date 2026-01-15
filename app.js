@@ -174,10 +174,13 @@ async function loadRecipes() {
     recipesContainer.innerHTML = '<div style="text-align: center; color: #667eea; font-size: 18px;">Loading recipes...</div>';
     
     const recipes = await getAllRecipes();
+    console.log('Raw recipes:', recipes);
     
     recipesContainer.innerHTML = recipes.map(recipe => {
+        console.log('Recipe media:', recipe.media);
         // Decode media if it's wrapped in Cosmos encoding
         const media = decodeCosmosData(recipe.media);
+        console.log('Decoded media:', media);
         
         let imgSrc = 'https://placehold.co/150/667eea/ffffff?text=No+Image';
         
